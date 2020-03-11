@@ -74,6 +74,15 @@ export interface SelectedItemBySlot {
   [key: string]: SelectedJoinedItemDefinition | undefined;
 }
 
+export interface EmblemMetricsData {
+  name: string;
+  icon: string;
+  iconSequences: Array<{ frames: string[] }>;
+  complete: boolean;
+  visible: boolean;
+  value: number;
+}
+
 export interface PowerBarsCharacterData {
   character: SelectedDestinyCharacterComponent;
   className: string;
@@ -84,9 +93,30 @@ export interface PowerBarsCharacterData {
   potentialOverallPower?: number;
   title?: string;
   other?: unknown;
+  emblemMetrics?: EmblemMetricsData;
 }
 
 export interface FullCharacterData extends PowerBarsCharacterData {
   character: DestinyCharacterComponent;
   topItemBySlot?: ItemBySlot;
+}
+
+export interface CustomDestinyMetricDefinition {
+  displayProperties: {
+    description: string;
+    name: string;
+    icon: string;
+    iconSequences: Array<{ frames: string[] }>;
+    hasIcon: boolean;
+  };
+  trackingObjectiveHash: number;
+  lowerValueIsBetter: boolean;
+  presentationNodeType: number;
+  traitIds: unknown[];
+  traitHashes: number[];
+  parentNodeHashes: number[];
+  hash: number;
+  index: number;
+  redacted: boolean;
+  blacklisted: boolean;
 }

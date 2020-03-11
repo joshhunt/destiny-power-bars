@@ -126,6 +126,16 @@ const CharacterDisplay = ({
         >
           {titleCase(data.className)}
         </div>
+        {data.emblemMetrics ? (
+          <div className={STYLES.metrics}>
+            <div className={STYLES.metricName}>{data.emblemMetrics.name}</div>
+            <div className={STYLES.metricValue}>{data.emblemMetrics.value}</div>
+            <img
+              className={STYLES.metricIcon}
+              src={`https://www.bungie.net${data.emblemMetrics.icon}`}
+            />
+          </div>
+        ) : null}
         {data.title && <div className={STYLES.title}>{data.title}</div>}
         <div className={STYLES.power}>
           {roundedPower + summableArtifactBonusPower}

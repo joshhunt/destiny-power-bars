@@ -72,3 +72,5 @@ export const ITEM_POWER_PINNACLE_CAP = 970;
 
 // How much above your current power do pinnacles drop when above the powerful cap
 export const ITEM_POWER_PINNACLE_DROP_OFFSET = 2;
+
+export const EMBLEM_ITEM_BUCKET = 4274335291;

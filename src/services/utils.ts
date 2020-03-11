@@ -18,6 +18,7 @@ import {
   ARTIFACT_INVENTORY_BUCKET_HASH,
   CLASS_NAMES,
   CLASS_TYPE_ALL,
+  EMBLEM_ITEM_BUCKET,
   ITEM_BUCKET_SLOTS,
   ITEM_POWER_SOFT_CAP,
   ITEM_SLOT_BUCKETS,
@@ -25,6 +26,7 @@ import {
   ITEM_TYPE_WEAPON
 } from "../constants";
 import {
+  EmblemMetricsData,
   ItemBySlot,
   JoinedItemDefinition,
   PowerBarsCharacterData,
@@ -179,15 +181,33 @@ const getItemScore = (
 const getEquipLabel = (item?: JoinedItemDefinition) =>
   item?.itemDefinition.equippingBlock.uniqueLabel;
 
-// const getEmblemData = (
-//   character: DestinyCharacterComponent,
-//   manifest: ManifestData
-// ) => {
-//   if (!manifest) {
-//     return;
-//   }
-//   return manifest.DestinyInventoryItemDefinition[character.emblemHash];
-// };
+interface DestinyItemComponentWithMetrics extends DestinyItemComponent {
+  metricHash: number;
+  metricObjective: {
+    objectiveHash: number;
+    progress: number;
+    completionValue: number;
+    complete: boolean;
+    visible: boolean;
+  };
+}
+
+const getEmblemMetricData = (
+  equippedEmblem: DestinyItemComponent,
+  manifest: ManifestData
+) => {
+  if (!manifest) {
+    return;
+  }
+  const {
+    metricHash,
+    metricObjective
+  } = equippedEmblem as DestinyItemComponentWithMetrics;
+  return {
+    metricObjective,
+    definition: manifest.DestinyMetricDefinition[metricHash]
+  };
+};
 
 const getDataForCharacterId = (
   characterId: string,
@@ -338,6 +358,25 @@ const getDataForCharacterId = (
     titleDefinition &&
     titleDefinition.titleInfo.titlesByGenderHash[character.genderHash];
 
+  const equippedEmblem = equippedCharacterItems.find(
+    item => item.bucketHash === EMBLEM_ITEM_BUCKET
+  );
+  let metricsData: EmblemMetricsData | undefined;
+  if (equippedEmblem) {
+    const metrics = getEmblemMetricData(equippedEmblem, manifest);
+    if (metrics?.metricObjective && metrics.definition) {
+      metricsData = {
+        name: metrics.definition.displayProperties.name,
+        icon: metrics.definition.displayProperties.icon,
+        iconSequences: metrics.definition.displayProperties.iconSequences,
+        value: metrics.metricObjective.progress,
+        complete: metrics.metricObjective.complete,
+        visible: metrics.metricObjective.visible
+      };
+      console.log(metricsData);
+    }
+  }
+
   const resultData: PowerBarsCharacterData = {
     character,
     className,
@@ -346,7 +385,8 @@ const getDataForCharacterId = (
     potentialOverallPower,
     topItemBySlot,
     artifactData,
-    title
+    title,
+    emblemMetrics: metricsData
   };
 
   return resultData;

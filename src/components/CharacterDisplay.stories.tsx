@@ -27,6 +27,24 @@ const mockData: PowerBarsCharacterData = {
 
   className: "warlock",
 
+  title: "Test Title",
+
+  emblemMetrics: {
+    name: "Total Final Blows",
+    icon: "/common/destiny2_content/icons/e7eadf253fdf8e1a60edd7fb9ec1e4af.png",
+    iconSequences: [
+      {
+        frames: [
+          "/common/destiny2_content/icons/e7eadf253fdf8e1a60edd7fb9ec1e4af.png",
+          "/common/destiny2_content/icons/9662e47f74160f8142210bceb0874443.png"
+        ]
+      }
+    ],
+    value: 492656,
+    complete: true,
+    visible: true
+  },
+
   overallPower: 929,
   overallPowerExact: 929 + 2 / 8,
   potentialOverallPower: 930,

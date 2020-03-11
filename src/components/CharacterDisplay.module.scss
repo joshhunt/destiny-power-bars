@@ -135,6 +135,27 @@
       0px -1px 2px rgba(black, 0.5);
   }
 
+  .metrics {
+    position: absolute;
+    bottom: 0em;
+    right: 0em;
+    color: white;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: center;
+
+    .metricName {
+      &:after {
+        content: ":";
+        margin-right: 0.5em;
+      }
+    }
+    .metricIcon {
+      margin: 0 0.5em;
+    }
+  }
+
   .name {
     left: 85px;
     font-size: 30px;

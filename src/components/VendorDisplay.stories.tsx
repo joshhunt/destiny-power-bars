@@ -10,7 +10,8 @@ export default { title: "Vendor" };
 const mockEmptyManifest: ManifestData = {
   DestinyInventoryItemDefinition: {},
   DestinyVendorDefinition: {},
-  DestinyRecordDefinition: {}
+  DestinyRecordDefinition: {},
+  DestinyMetricDefinition: {}
 };
 
 const mockManifestWithData: ManifestData = ({

@@ -9,6 +9,7 @@ import {
 import { HttpClientConfig } from "bungie-api-ts/http";
 import { get, set } from "idb-keyval";
 
+import { CustomDestinyMetricDefinition } from "../types";
 import { getAccessToken } from "./bungie-auth";
 import { BUNGIE_API_KEY } from "./config";
 import { debug } from "./debug";
@@ -71,11 +72,15 @@ export interface ManifestData {
   DestinyRecordDefinition: {
     [key: string]: DestinyRecordDefinition | undefined;
   };
+  DestinyMetricDefinition: {
+    [key: string]: CustomDestinyMetricDefinition | undefined;
+  };
 }
 const manifestPropertyWhitelist = [
   "DestinyInventoryItemDefinition",
   "DestinyVendorDefinition",
-  "DestinyRecordDefinition"
+  "DestinyRecordDefinition",
+  "DestinyMetricDefinition"
 ];
 
 let getCachedManifestDataPromise: Promise<ManifestData> | undefined;
@@ -256,7 +261,8 @@ export const getFullProfile = (
       205, // DestinyComponentType.CharacterEquipment,
       102, // DestinyComponentType.ProfileInventories,
       300, // DestinyComponentType.ItemInstances,
-      104 // DestinyComponentType.ProfileProgression
+      104, // DestinyComponentType.ProfileProgression,
+      1100 // DestinyComponentType.Metrics
     ],
     destinyMembershipId: membershipId,
     membershipType
